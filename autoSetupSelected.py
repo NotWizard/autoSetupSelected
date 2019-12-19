@@ -29,7 +29,7 @@ def addProducts(proID):
     # 点击跳转商品管理
     chromeBrowser.find_element_by_xpath(
         '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[3]/td[3]/div/button[3]').click()
-    time.sleep(1)
+    time.sleep(2)
 
     # 点击新增
     chromeBrowser.find_element_by_xpath('//*[@class="app-container"]/div/form[2]/div/div/button').click()
@@ -42,14 +42,31 @@ def addProducts(proID):
     # 点击搜索
     chromeBrowser.find_element_by_xpath('//*[@class="el-dialog__body"]/div/form/div[2]/div/div/button').click()
     time.sleep(1)
+    
+    # 滚动页面
+    # js = "window.scrollTo(0,document.body.scrollHeight);"
+    # chromeBrowser.execute_script(js)
+    # time.sleep(1)
 
-    # 点击全选
-    chromeBrowser.find_element_by_xpath('//*[@class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"]/div[2]/table/thead/tr/th/div/label/span').click()
+    # 点击选择页数
+    chromeBrowser.find_element_by_xpath('//*[@class="editGoodsGounp"]/div[2]/div/span/div').click()
     time.sleep(1)
 
-    # 点击确定添加
-    chromeBrowser.find_element_by_xpath('//*[@class=""app-container]/div[4]/div/div[3]/span/button[2]').click()
-    time.sleep(1)
+    # 点击选择一页展示50个
+    # selectWindow = chromeBrowser.find_element_by_xpath('//*[@class="el-popup-parent--hidden"]/div[2]')
+    # time.sleep(1)
+    # selectWindow.find_element_by_xpath('//ul[@class="el-scrollbar__view el-select-dropdown__list"]/li[4]/span').click()
+    # time.sleep(1)
+
+    chromeBrowser.find_element_by_xpath('//ul[@class="el-scrollbar__view el-select-dropdown__list"]/li[4]/span[contains(text(),"50条/页")]').click()
+
+    # # 点击全选
+    # chromeBrowser.find_element_by_xpath('//*[@class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"]/div[2]/table/thead/tr/th/div/label/span').click()
+    # time.sleep(1)
+
+    # # 点击确定添加
+    # chromeBrowser.find_element_by_xpath('//*[@class="app-container"]/div[4]/div/div[3]/span/button[2]').click()
+    # time.sleep(1)
 
 
 def sortChoicesProducts(proID):
