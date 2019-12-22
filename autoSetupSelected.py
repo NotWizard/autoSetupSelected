@@ -14,22 +14,12 @@ from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 import time
 
-productsID = "5463	9373	12152	5463	8224	12152	12520	12360	12070	12511	11921	7985	6801	12512	11532	6166	12217	8731"
+productsID = "9373	12152	8224	12520	12360	12070"
 
 
 def addProducts(proID):
-    # 点击跳转品质优选
-    chromeBrowser.find_element_by_xpath(
-        '//*[@class="el-tabs el-tabs--card el-tabs--top"]/div/div/div/div/div[6]'
-    ).click()
-    time.sleep(2)
-
+    
     replacedProID = proID.replace("	", ",")
-
-    # 点击跳转商品管理
-    chromeBrowser.find_element_by_xpath(
-        '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[3]/td[3]/div/button[3]').click()
-    time.sleep(2)
 
     # 点击新增
     chromeBrowser.find_element_by_xpath('//*[@class="app-container"]/div/form[2]/div/div/button').click()
@@ -53,60 +43,57 @@ def addProducts(proID):
     time.sleep(1)
 
     # 点击选择一页展示50个
-    # selectWindow = chromeBrowser.find_element_by_xpath('//*[@class="el-popup-parent--hidden"]/div[2]')
-    # time.sleep(1)
-    # selectWindow.find_element_by_xpath('//ul[@class="el-scrollbar__view el-select-dropdown__list"]/li[4]/span').click()
-    # time.sleep(1)
+    chromeBrowser.find_element_by_xpath('/html/body/div[3]/div[1]/div[1]/ul/li[4]/span').click()
+    time.sleep(1)
 
-    chromeBrowser.find_element_by_xpath('//ul[@class="el-scrollbar__view el-select-dropdown__list"]/li[4]/span[contains(text(),"50条/页")]').click()
+    # 点击全选
+    chromeBrowser.find_element_by_xpath('//*[@class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"]/div[2]/table/thead/tr/th/div/label/span').click()
+    time.sleep(1)
 
-    # # 点击全选
-    # chromeBrowser.find_element_by_xpath('//*[@class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"]/div[2]/table/thead/tr/th/div/label/span').click()
-    # time.sleep(1)
-
-    # # 点击确定添加
-    # chromeBrowser.find_element_by_xpath('//*[@class="app-container"]/div[4]/div/div[3]/span/button[2]').click()
-    # time.sleep(1)
+    # 点击确定添加
+    chromeBrowser.find_element_by_xpath('//*[@class="app-container"]/div[4]/div/div[3]/span/button[2]').click()
+    time.sleep(1)
 
 
 def sortChoicesProducts(proID):
     IDs = proID.split("	")
 
     for i in range(1, len(IDs) + 1):
+        # 清空商品ID输入框
         chromeBrowser.find_element_by_xpath(
-            '//*[@class="sub-menu-content-wrapper"]/div/div/div/form/div/div/div/input'
+            '//*[@class="app-container"]/div/form/div/div/div/input'
         ).clear()
         time.sleep(1)
 
+        # 输入商品ID
         chromeBrowser.find_element_by_xpath(
-            '//*[@class="sub-menu-content-wrapper"]/div/div/div/form/div/div/div/input'
+            '//*[@class="app-container"]/div/form/div/div/div/input'
         ).send_keys(IDs[i - 1])
         time.sleep(1)
 
+        # 点击搜索
         chromeBrowser.find_element_by_xpath(
-            '//*[@class="sub-menu-content-wrapper"]/div/div/div/form/div[3]/div/button'
+            '//*[@class="app-container"]/div/form/div[3]/div/button'
         ).click()
         time.sleep(2)
 
+        # 清空商品的当前排序
         chromeBrowser.find_element_by_xpath(
             '//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'
         ).clear()
         time.sleep(1)
 
+        # 输入商品的本应该排序
         chromeBrowser.find_element_by_xpath(
             '//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'
         ).send_keys(i)
         time.sleep(1)
 
+        # 点击保存排序
         chromeBrowser.find_element_by_xpath(
             '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr/td[4]/div/button/span'
         ).click()
         time.sleep(1)
-
-        chromeBrowser.find_element_by_xpath(
-            '//*[@class="el-message-box__wrapper"]/div/div[3]/button[2]/span'
-        ).click()
-        time.sleep(2)
 
 
 if __name__ == "__main__":
@@ -136,6 +123,17 @@ if __name__ == "__main__":
         )
     time.sleep(2)
 
+    # 点击跳转品质优选
+    chromeBrowser.find_element_by_xpath(
+        '//*[@class="el-tabs el-tabs--card el-tabs--top"]/div/div/div/div/div[6]'
+    ).click()
+    time.sleep(2)
+
+    # 点击跳转马来商品管理
+    chromeBrowser.find_element_by_xpath(
+        '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[3]/td[3]/div/button[3]').click()
+    time.sleep(2)
+
     addProducts(productsID)
 
-    # sortChoicesProducts(productsID)
+    sortChoicesProducts(productsID)
