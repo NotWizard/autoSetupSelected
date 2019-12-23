@@ -14,11 +14,11 @@ from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 import time
 
-productsID = "9373	12152	8224	12520	12360	12070"
+productsID = "7282	13072	12545	7924	9477	449186651084689408	10396	11280	13105	13330	449533615567540224	8713	449479708069859329	11120	449227698330406913	4272	13042	12433	13034	444757869091368960	9029	449179988705423361	8509	12880"
 
 
 def addProducts(proID):
-    
+
     replacedProID = proID.replace("	", ",")
 
     # 点击新增
@@ -32,7 +32,7 @@ def addProducts(proID):
     # 点击搜索
     chromeBrowser.find_element_by_xpath('//*[@class="el-dialog__body"]/div/form/div[2]/div/div/button').click()
     time.sleep(1)
-    
+
     # 滚动页面
     # js = "window.scrollTo(0,document.body.scrollHeight);"
     # chromeBrowser.execute_script(js)
