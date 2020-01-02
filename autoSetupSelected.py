@@ -14,7 +14,7 @@ from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 import time
 
-productsID = "447200784958885889	8301	449556520485531648	444400192607760385	11508​	13396	11282	13072	446550240158298112	5436	10449	446977751623143424	12565	12899	12270	451583945465671680	12788	11665	11351	444458706348806145	11290	12440	7568	12545	8517	9009	9647	451574877489475585	7985	10144"
+productsID = "13125"
 
 
 def addProducts(proID):
@@ -78,25 +78,33 @@ def sortChoicesProducts(proID):
         time.sleep(2)
 
         if isElementExist('//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'):
-            # 清空商品的当前排序
-            chromeBrowser.find_element_by_xpath(
+            # 判断当前排序和目标排序序号是否一致
+            inputContent = chromeBrowser.find_element_by_xpath(
                 '//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'
-            ).clear()
-            time.sleep(1)
+            ).get_attribute('aria-valuenow')
 
-            # 输入商品的本应该排序
-            chromeBrowser.find_element_by_xpath(
-                '//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'
-            ).send_keys(i)
-            time.sleep(1)
+            if str(inputContent) == str(i):
+                print("ProductID: %s previous serial number equals target serial number : %s " % (IDs[i-1], i))
+            else:
+                # 清空商品的当前排序
+                chromeBrowser.find_element_by_xpath(
+                    '//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'
+                ).clear()
+                time.sleep(1)
 
-            # 点击保存排序
-            chromeBrowser.find_element_by_xpath(
-                '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr/td[4]/div/button/span'
-            ).click()
-            time.sleep(1)
+                # 输入商品的本应该排序
+                chromeBrowser.find_element_by_xpath(
+                    '//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'
+                ).send_keys(i)
+                time.sleep(1)
+
+                # 点击保存排序
+                chromeBrowser.find_element_by_xpath(
+                    '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr/td[4]/div/button/span'
+                ).click()
+                time.sleep(1)
         else:
-            print("There do not have this product %s", IDs[i - 1])
+            print("There do not have this product, ID: %s, Serial number: %s" % (IDs[i - 1], i))
             continue
 
 
@@ -149,6 +157,6 @@ if __name__ == "__main__":
         '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[3]/td[3]/div/button[3]').click()
     time.sleep(2)
 
-    # addProducts(productsID)
+    addProducts(productsID)
 
     sortChoicesProducts(productsID)
