@@ -14,7 +14,7 @@ from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 import time
 
-productsID = "13125"
+productsID = "451596424925163521	12757	7835	2388	9189	8953	12930	12903	12986	11803	5700	12565	6445	13055	451595421228216320	9085	8523	6675	8171	444687999263846400	10622	11301	10161	11265	11785	8770	12710	13007	446918043604365313	5436"
 
 
 def addProducts(proID):
@@ -119,22 +119,7 @@ def isElementExist(xpath):
         return flag
 
 
-if __name__ == "__main__":
-    chromeBrowser = webdriver.Chrome()
-    chromeBrowser.get('https://boss.fingo.shop/#/marketingCenter/appSet')
-    time.sleep(2)
-
-    chromeBrowser.find_element_by_xpath(
-        '//*[@class="login-container"]/form/div/div/div/input').send_keys(
-            'xiangjie')
-    chromeBrowser.find_element_by_xpath(
-        '//*[@class="login-container"]/form/div[2]/div/div/input').send_keys(
-            '123456')
-    # 点击登陆
-    chromeBrowser.find_element_by_xpath(
-        '//*[@class="login-container"]/form/div[3]/div/button').click()
-    time.sleep(2)
-
+def setUpSelected(countryID):
     # 点击折叠打开运营管理
     chromeBrowser.find_element_by_xpath(
         '//*[@class="layout-nav-wrapper"]/div/ul/li[2]/div').click()
@@ -152,11 +137,40 @@ if __name__ == "__main__":
     ).click()
     time.sleep(2)
 
-    # 点击跳转马来商品管理
-    chromeBrowser.find_element_by_xpath(
-        '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[3]/td[3]/div/button[3]').click()
+    if countryID == 1:
+        # 点击跳转马来商品管理
+        chromeBrowser.find_element_by_xpath(
+            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr/td[3]/div/button[3]').click()
+    elif countryID == 2:
+        chromeBrowser.find_element_by_xpath(
+            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[%d]/td[3]/div/button[3]' % countryID).click()
+    elif countryID == 3:
+        chromeBrowser.find_element_by_xpath(
+            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[%d]/td[3]/div/button[3]' % countryID).click()
+    else:
+        chromeBrowser.find_element_by_xpath(
+            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[%d]/td[3]/div/button[3]' % countryID).click()
+
+    time.sleep(2)
+    addProducts(productsID)
+    sortChoicesProducts(productsID)
+
+
+if __name__ == "__main__":
+    chromeBrowser = webdriver.Chrome()
+    chromeBrowser.get('https://boss.fingo.shop/#/marketingCenter/appSet')
     time.sleep(2)
 
-    addProducts(productsID)
+    chromeBrowser.find_element_by_xpath(
+        '//*[@class="login-container"]/form/div/div/div/input').send_keys(
+            'xiangjie')
+    chromeBrowser.find_element_by_xpath(
+        '//*[@class="login-container"]/form/div[2]/div/div/input').send_keys(
+            '123456')
+    # 点击登陆
+    chromeBrowser.find_element_by_xpath(
+        '//*[@class="login-container"]/form/div[3]/div/button').click()
+    time.sleep(2)
 
-    sortChoicesProducts(productsID)
+    # countryID  泰国:1 新加坡:2 马来西亚:3
+    setUpSelected(1)
