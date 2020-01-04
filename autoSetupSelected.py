@@ -57,6 +57,8 @@ def addProducts(proID):
 
 def sortChoicesProducts(proID):
     IDs = proID.split("	")
+    # 缺少的商品的数量
+    missingCount = 0
 
     for i in range(1, len(IDs) + 1):
         # 清空商品ID输入框
@@ -85,6 +87,7 @@ def sortChoicesProducts(proID):
 
             if str(inputContent) == str(i):
                 print("ProductID: %s previous serial number equals target serial number : %s " % (IDs[i-1], i))
+                missingCount += 1
             else:
                 # 清空商品的当前排序
                 chromeBrowser.find_element_by_xpath(
@@ -95,7 +98,7 @@ def sortChoicesProducts(proID):
                 # 输入商品的本应该排序
                 chromeBrowser.find_element_by_xpath(
                     '//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'
-                ).send_keys(i)
+                ).send_keys(i - missingCount)
                 time.sleep(1)
 
                 # 点击保存排序
