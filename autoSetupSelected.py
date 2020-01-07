@@ -14,7 +14,7 @@ from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 import time
 
-productsID = "451596424925163521	12757	7835	2388	9189	8953	12930	12903	12986	11803	5700	12565	6445	13055	451595421228216320	9085	8523	6675	8171	444687999263846400	10622	11301	10161	11265	11785	8770	12710	13007	446918043604365313	5436"
+productsID = "455276903029284864	7835	6166	11803	9405	8219	451699154129784832	12930	451595421228216320	11301	6154	9647	8963	10823	8770	454458108069027840	451705962516975617	451690620252073984	6071	444519406333071361	10809	455288905751601153"
 
 
 def addProducts(proID):
@@ -85,9 +85,8 @@ def sortChoicesProducts(proID):
                 '//*[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[3]/div/div/div/input'
             ).get_attribute('aria-valuenow')
 
-            if str(inputContent) == str(i):
+            if str(inputContent) == str(i - missingCount):
                 print("ProductID: %s previous serial number equals target serial number : %s " % (IDs[i-1], i))
-                missingCount += 1
             else:
                 # 清空商品的当前排序
                 chromeBrowser.find_element_by_xpath(
@@ -108,6 +107,8 @@ def sortChoicesProducts(proID):
                 time.sleep(1)
         else:
             print("There do not have this product, ID: %s, Serial number: %s" % (IDs[i - 1], i))
+            missingCount += 1
+            print(missingCount)
             continue
 
 
@@ -176,4 +177,4 @@ if __name__ == "__main__":
     time.sleep(2)
 
     # countryID  泰国:1 新加坡:2 马来西亚:3
-    setUpSelected(1)
+    setUpSelected(2)
