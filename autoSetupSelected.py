@@ -14,7 +14,7 @@ from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 import time
 
-productsID = "455276903029284864	7835	6166	11803	9405	8219	451699154129784832	12930	451595421228216320	11301	6154	9647	8963	10823	8770	454458108069027840	451705962516975617	451690620252073984	6071	444519406333071361	10809	455288905751601153"
+productsID = "7574	11226	12823	11265	454582765489229824	7503	10476	12433	12937	12899	7633	9490	10190	9910	446838342944821248	8641	9468	11026	9619	7660	9065	6879	10275	3994	10773	3103	9913	11274	451690620252073984	9071	9915	12512	454210504181682176	9174	7405	8286	10396	7302	11119	12619	12757	12419	9220	9338	8739	7565	12511	12294	9066	6278"
 
 
 def addProducts(proID):
@@ -108,7 +108,6 @@ def sortChoicesProducts(proID):
         else:
             print("There do not have this product, ID: %s, Serial number: %s" % (IDs[i - 1], i))
             missingCount += 1
-            print(missingCount)
             continue
 
 
@@ -131,29 +130,28 @@ def setUpSelected(countryID):
 
     # 点击跳转App配置
     chromeBrowser.find_element_by_xpath(
-        '//*[@class="layout-nav-wrapper"]/div/ul/li[2]/ul/li/a/span').click(
+        '//*[@class="layout-nav-wrapper"]/div/ul/li[2]/ul/li[2]/a/span').click(
         )
     time.sleep(2)
 
     # 点击跳转品质优选
     chromeBrowser.find_element_by_xpath(
-        '//*[@class="el-tabs el-tabs--card el-tabs--top"]/div/div/div/div/div[6]'
+        '//*[@class="el-tabs el-tabs--card el-tabs--top"]/div/div/div/div/div[9]'
     ).click()
     time.sleep(2)
 
-    if countryID == 1:
+    if countryID == 3:
         # 点击跳转马来商品管理
         chromeBrowser.find_element_by_xpath(
-            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr/td[3]/div/button[3]').click()
+            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[%d]/td[5]/div/button[4]' % countryID).click()
     elif countryID == 2:
+        # 点击跳转新加坡商品管理
         chromeBrowser.find_element_by_xpath(
-            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[%d]/td[3]/div/button[3]' % countryID).click()
-    elif countryID == 3:
-        chromeBrowser.find_element_by_xpath(
-            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[%d]/td[3]/div/button[3]' % countryID).click()
+            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[%d]/td[5]/div/button[4]' % countryID).click()
     else:
+        # 点击跳转泰国商品管理
         chromeBrowser.find_element_by_xpath(
-            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr[%d]/td[3]/div/button[3]' % countryID).click()
+            '//*[@class="el-table__fixed-body-wrapper"]/table/tbody/tr/td[5]/div/button[4]').click()
 
     time.sleep(2)
     addProducts(productsID)
@@ -177,4 +175,4 @@ if __name__ == "__main__":
     time.sleep(2)
 
     # countryID  泰国:1 新加坡:2 马来西亚:3
-    setUpSelected(2)
+    setUpSelected(3)
